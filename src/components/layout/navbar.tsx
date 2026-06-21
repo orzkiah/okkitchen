@@ -3,8 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingCart, Menu, X, User, MapPin, Lock, LayoutDashboard, LogOut } from "lucide-react";
-import { useSession, signOut } from "next-auth/react";
+import { ShoppingCart } from "lucide-react";
 import { Logo } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 import { UserMenu } from "./user-menu";
@@ -20,8 +19,6 @@ const NAV_LINKS = [
 
 export function Navbar() {
   const pathname = usePathname();
-  const { data: session } = useSession();
-  const [open, setOpen] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
   const count = useCartStore((s) => s.items.reduce((n, i) => n + i.quantity, 0));
 
@@ -69,89 +66,9 @@ export function Navbar() {
             </Link>
           </Button>
 
-          <UserMenu />
-
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            aria-label="Menu"
-            onClick={() => setOpen((v) => !v)}
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </Button>
+          <UserMenu navLinks={NAV_LINKS} />
         </div>
       </div>
-
-      {open && (
-        <div className="md:hidden border-t border-border/60 bg-card px-4 py-3">
-          <nav className="flex flex-col gap-1">
-            {NAV_LINKS.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-secondary"
-              >
-                {l.label}
-              </Link>
-            ))}
-
-            {session?.user ? (
-              <>
-                <div className="my-1 border-t" />
-                {session.user.role === "ADMIN" && (
-                  <Link
-                    href="/admin"
-                    onClick={() => setOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-secondary"
-                  >
-                    <LayoutDashboard className="size-4" /> Dashboard Admin
-                  </Link>
-                )}
-                <Link
-                  href="/profile"
-                  onClick={() => setOpen(false)}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-secondary"
-                >
-                  <User className="size-4" /> Profil Saya
-                </Link>
-                <Link
-                  href="/addresses"
-                  onClick={() => setOpen(false)}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-secondary"
-                >
-                  <MapPin className="size-4" /> Alamat
-                </Link>
-                <Link
-                  href="/security"
-                  onClick={() => setOpen(false)}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-secondary"
-                >
-                  <Lock className="size-4" /> Keamanan
-                </Link>
-                <button
-                  onClick={() => {
-                    setOpen(false);
-                    signOut({ callbackUrl: "/" });
-                  }}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium text-destructive hover:bg-destructive/10"
-                >
-                  <LogOut className="size-4" /> Keluar
-                </button>
-              </>
-            ) : (
-              <Link
-                href="/login"
-                onClick={() => setOpen(false)}
-                className="mt-1 rounded-lg brand-gradient px-3 py-2.5 text-center text-sm font-semibold text-white"
-              >
-                Masuk / Daftar
-              </Link>
-            )}
-          </nav>
-        </div>
-      )}
     </header>
   );
 }

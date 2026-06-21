@@ -33,13 +33,13 @@ export function AdminMobileNav() {
       </Button>
 
       {open && (
-        <div className="fixed inset-0 z-50">
+        <div className="fixed inset-0 z-[60]">
           <div
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => setOpen(false)}
           />
-          <div className="absolute left-0 top-0 flex h-full w-64 flex-col border-r bg-card shadow-soft">
-            <div className="flex justify-end p-2">
+          <div className="absolute inset-y-0 left-0 flex w-64 flex-col border-r bg-card shadow-soft">
+            <div className="flex shrink-0 justify-end p-2">
               <Button
                 variant="ghost"
                 size="icon"
