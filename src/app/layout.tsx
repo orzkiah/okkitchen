@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Lora } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
 import { Providers } from "@/components/providers";
@@ -10,6 +10,13 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
+});
+
+const lora = Lora({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  display: "swap",
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -47,7 +54,7 @@ export default async function RootLayout({
     <html
       lang="id"
       suppressHydrationWarning
-      className={`${jakarta.variable} h-full ${theme === "dark" ? "dark" : ""}`}
+      className={`${jakarta.variable} ${lora.variable} h-full ${theme === "dark" ? "dark" : ""}`}
     >
       <body className="min-h-full flex flex-col antialiased">
         <Providers initialTheme={theme}>{children}</Providers>

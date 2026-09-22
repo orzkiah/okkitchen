@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { User, Package, MapPin, Lock, LogOut, LayoutDashboard, Home, UtensilsCrossed } from "lucide-react";
+import { User, Package, MapPin, Lock, LogOut, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -14,11 +14,6 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
-interface NavLink {
-  href: string;
-  label: string;
-}
-
 function initials(name?: string | null) {
   if (!name) return "OK";
   return name
@@ -29,7 +24,7 @@ function initials(name?: string | null) {
     .toUpperCase();
 }
 
-export function UserMenu({ navLinks = [] }: { navLinks?: NavLink[] }) {
+export function UserMenu({ navLinks }: { navLinks?: unknown } = {}) {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
@@ -38,7 +33,7 @@ export function UserMenu({ navLinks = [] }: { navLinks?: NavLink[] }) {
 
   if (!session?.user) {
     return (
-      <Button asChild variant="gradient" size="sm">
+      <Button asChild variant="gradient" size="sm" className="rounded-full">
         <Link href="/login">
           <User className="size-4" /> Masuk
         </Link>
@@ -65,21 +60,6 @@ export function UserMenu({ navLinks = [] }: { navLinks?: NavLink[] }) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        {/* Primary navigation — only on mobile (desktop shows it in the top bar) */}
-        {navLinks.length > 0 && (
-          <div className="md:hidden">
-            {navLinks
-              .filter((l) => l.href !== "/orders")
-              .map((l) => (
-                <DropdownMenuItem key={l.href} asChild>
-                  <Link href={l.href}>
-                    {l.href === "/" ? <Home /> : <UtensilsCrossed />} {l.label}
-                  </Link>
-                </DropdownMenuItem>
-              ))}
-            <DropdownMenuSeparator />
-          </div>
-        )}
 
         {role === "ADMIN" && (
           <>

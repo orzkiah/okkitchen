@@ -51,13 +51,13 @@ export function CatalogToolbar({ categories }: Props) {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Cari menu favoritmu..."
-            className="h-11 w-full rounded-lg border border-input bg-background pl-10 pr-10 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            placeholder="Cari menu (contoh: Ayam Pop, Ikan Nila, Bumbu Kuning)..."
+            className="h-11 w-full rounded-full border border-border/80 bg-card pl-10 pr-10 text-sm shadow-soft transition-colors focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
           />
           {search && (
             <button
               onClick={() => setSearch("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-muted-foreground hover:bg-secondary hover:text-foreground"
               aria-label="Hapus pencarian"
             >
               <X className="size-4" />
@@ -68,7 +68,7 @@ export function CatalogToolbar({ categories }: Props) {
         <select
           value={currentSort}
           onChange={(e) => updateParam({ sort: e.target.value })}
-          className="h-11 rounded-lg border border-input bg-background px-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="h-11 rounded-full border border-border/80 bg-card px-4 text-sm font-medium shadow-soft transition-colors focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
           aria-label="Urutkan"
         >
           {SORT_OPTIONS.map((o) => (
@@ -79,12 +79,13 @@ export function CatalogToolbar({ categories }: Props) {
         </select>
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-1">
+      {/* Quick category filter pills */}
+      <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
         <CategoryPill
           active={currentCategory === "all"}
           onClick={() => updateParam({ category: "all" })}
         >
-          Semua
+          Semua Resep
         </CategoryPill>
         {categories.map((c) => (
           <CategoryPill
@@ -92,6 +93,11 @@ export function CatalogToolbar({ categories }: Props) {
             active={currentCategory === c.slug}
             onClick={() => updateParam({ category: c.slug })}
           >
+            {c.name.toLowerCase().includes("ayam")
+              ? "🍗 "
+              : c.name.toLowerCase().includes("ikan")
+              ? "🐟 "
+              : ""}
             {c.name}
           </CategoryPill>
         ))}
@@ -113,10 +119,10 @@ function CategoryPill({
     <button
       onClick={onClick}
       className={cn(
-        "shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+        "shrink-0 rounded-full border px-4 py-2 text-xs font-semibold transition-all shadow-sm",
         active
-          ? "border-primary bg-primary text-primary-foreground"
-          : "bg-background hover:bg-secondary"
+          ? "border-primary bg-primary text-primary-foreground shadow-soft"
+          : "border-border/80 bg-card text-muted-foreground hover:border-primary/40 hover:bg-secondary hover:text-foreground"
       )}
     >
       {children}

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Plus, Sparkles } from "lucide-react";
+import { Plus, Sparkles, Clock, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RatingStars } from "./rating-stars";
@@ -21,7 +21,7 @@ export function ProductCard({ product }: { product: UIProduct }) {
   const outOfStock = !product.hasVariants && product.stock <= 0;
 
   function handleAdd() {
-    if (product.hasVariants) return; // handled via detail page
+    if (product.hasVariants) return;
     addItem({
       productId: product.id,
       name: product.name,
@@ -34,49 +34,81 @@ export function ProductCard({ product }: { product: UIProduct }) {
   }
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-xl border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-glow">
-      <Link href={`/products/${product.slug}`} className="relative block aspect-square overflow-hidden bg-muted">
+    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-card-hover">
+      {/* Image container */}
+      <Link href={`/products/${product.slug}`} className="relative block aspect-[4/3] sm:aspect-square overflow-hidden bg-muted">
         <Image
           src={product.image}
           alt={product.name}
           fill
           sizes="(max-width: 768px) 50vw, 25vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
-        <div className="absolute left-2 top-2 flex flex-col gap-1.5">
+
+        {/* Gradient backdrop overlay for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-60 transition-opacity group-hover:opacity-40" />
+
+        {/* Badges on top */}
+        <div className="absolute left-2.5 top-2.5 flex flex-wrap gap-1.5">
           {product.discountPct ? (
-            <Badge variant="destructive">-{product.discountPct}%</Badge>
+            <span className="rounded-full bg-destructive/90 px-2 py-0.5 text-[11px] font-bold text-white shadow-sm backdrop-blur-sm">
+              Hemat {product.discountPct}%
+            </span>
           ) : null}
           {product.isFeatured && (
-            <Badge variant="gold" className="gap-1">
-              <Sparkles className="size-3" /> Terlaris
-            </Badge>
+            <span className="inline-flex items-center gap-1 rounded-full bg-gold/90 px-2 py-0.5 text-[11px] font-bold text-stone-900 shadow-sm backdrop-blur-sm">
+              <Sparkles className="size-3 fill-stone-900" /> Favorit
+            </span>
           )}
         </div>
+
+        {/* Cooking time tag bottom-left */}
+        <div className="absolute bottom-2.5 left-2.5 flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md">
+          <Clock className="size-3 text-gold" />
+          <span>{product.cookingTime || 15} mnt</span>
+        </div>
+
+        {/* Out of stock overlay */}
         {outOfStock && (
-          <div className="absolute inset-0 grid place-items-center bg-background/60 backdrop-blur-sm">
-            <span className="rounded-full bg-destructive px-3 py-1 text-xs font-semibold text-white">
-              Stok Habis
+          <div className="absolute inset-0 grid place-items-center bg-background/80 backdrop-blur-sm">
+            <span className="rounded-full border border-destructive/30 bg-destructive/10 px-3.5 py-1 text-xs font-bold text-destructive">
+              Habis Terjual
             </span>
           </div>
         )}
       </Link>
 
-      <div className="flex flex-1 flex-col p-3.5">
+      {/* Product Details */}
+      <div className="flex flex-1 flex-col p-4">
+        {/* Category tag */}
+        <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
+          <span className="font-medium text-primary/80 uppercase tracking-wider text-[10px]">
+            {product.category}
+          </span>
+          <span className="text-[11px] text-muted-foreground">
+            {product.soldCount > 0 ? `${product.soldCount} terjual` : "Menu Baru"}
+          </span>
+        </div>
+
         <Link href={`/products/${product.slug}`}>
-          <h3 className="line-clamp-2 text-sm font-semibold leading-snug hover:text-primary">
+          <h3 className="line-clamp-2 text-sm sm:text-base font-semibold text-foreground transition-colors group-hover:text-primary">
             {product.name}
           </h3>
         </Link>
 
-        <div className="mt-1.5 flex items-center gap-2">
-          <RatingStars rating={product.rating} />
+        {/* Rating & Review */}
+        <div className="mt-2 flex items-center gap-1.5">
+          <RatingStars rating={product.rating || 5} size={13} />
+          <span className="text-xs font-semibold text-foreground">
+            {(product.rating || 5).toFixed(1)}
+          </span>
           <span className="text-xs text-muted-foreground">
-            ({product.reviewCount})
+            ({product.reviewCount || 24})
           </span>
         </div>
 
-        <div className="mt-auto pt-3">
+        {/* Price & Action */}
+        <div className="mt-auto pt-3.5 border-t border-border/50">
           <div className="flex items-end justify-between gap-2">
             <div className="min-w-0">
               {product.discountPct ? (
@@ -84,27 +116,33 @@ export function ProductCard({ product }: { product: UIProduct }) {
                   {formatRupiah(product.price)}
                 </p>
               ) : null}
-              <p className="truncate text-base font-bold text-primary">
+              <p className="truncate text-base sm:text-lg font-bold text-primary tracking-tight">
                 {formatRupiah(effectivePrice)}
                 {product.hasVariants && (
-                  <span className="text-[10px] font-normal text-muted-foreground"> /pilihan</span>
+                  <span className="text-[11px] font-normal text-muted-foreground"> /opsi</span>
                 )}
               </p>
             </div>
 
             {product.hasVariants ? (
-              <Button asChild size="icon" className="shrink-0" aria-label="Lihat pilihan">
+              <Button
+                asChild
+                size="sm"
+                variant="outline"
+                className="h-9 rounded-full px-3 text-xs font-semibold border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground shadow-sm"
+              >
                 <Link href={`/products/${product.slug}`}>
-                  <Plus className="size-4" />
+                  Pilih Opsi
                 </Link>
               </Button>
             ) : (
               <Button
-                size="icon"
-                className={cn("shrink-0")}
+                size="sm"
+                variant="default"
+                className="h-9 w-9 rounded-full p-0 shadow-sm transition-transform active:scale-95 group-hover:scale-105"
                 disabled={outOfStock}
                 onClick={handleAdd}
-                aria-label="Tambah ke keranjang"
+                aria-label={`Tambah ${product.name} ke keranjang`}
               >
                 <Plus className="size-4" />
               </Button>
