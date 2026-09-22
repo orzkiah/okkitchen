@@ -19,155 +19,161 @@ import {
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/shared/product-card";
 import { getFeaturedProducts } from "@/server/services/product.service";
+import { MarqueeTicker } from "./marquee-ticker";
 
 /* ---------------- HERO SECTION ---------------- */
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-border/40 bg-gradient-to-b from-secondary/40 via-background to-background pt-8 pb-16 md:pt-14 md:pb-24">
-      {/* Decorative ambient culinary glow */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -left-20 -top-24 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute right-0 top-1/4 h-[32rem] w-[32rem] rounded-full bg-gold/10 blur-3xl" />
-        <div className="culinary-pattern absolute inset-0 opacity-40" />
-      </div>
+    <>
+      <section className="relative overflow-hidden border-b border-border/40 bg-gradient-to-b from-secondary/40 via-background to-background pt-8 pb-16 md:pt-14 md:pb-24">
+        {/* Decorative ambient culinary glow */}
+        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute -left-20 -top-24 h-96 w-96 rounded-full bg-primary/10 blur-3xl animate-pulse" />
+          <div className="absolute right-0 top-1/4 h-[32rem] w-[32rem] rounded-full bg-gold/10 blur-3xl animate-pulse duration-1000" />
+          <div className="culinary-pattern absolute inset-0 opacity-40" />
+        </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
-          {/* Left Column: Editorial Headline & Actions */}
-          <div className="space-y-6 lg:col-span-7">
-            {/* Artisanal badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold text-primary backdrop-blur-sm shadow-sm">
-              <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-              <span>Dapur Segar Siap Masak · P-IRT & 100% Halal</span>
-            </div>
-
-            {/* Editorial Heading */}
-            <h1 className="text-balance text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-foreground leading-[1.12]">
-              Masak Enak Tanpa Ribet,{" "}
-              <span className="font-serif italic font-normal text-primary">
-                Rasa Restoran
-              </span>{" "}
-              di Dapur Rumah.
-            </h1>
-
-            <p className="max-w-xl text-balance text-base text-muted-foreground sm:text-lg leading-relaxed">
-              Bahan segar pilihan yang sudah dibersihkan, dipotong rapi, dan dimarinasi
-              bumbu rempah Nusantara asli. Buka vacuum pack, cemplung ke wajan,
-              dan hidangkan masakan hangat dalam 15 menit.
-            </p>
-
-            {/* Reassurance Micro-Pills */}
-            <div className="flex flex-wrap gap-y-2 gap-x-4 pt-1 text-xs font-medium text-foreground/80">
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-4 text-accent" /> Tanpa repot ulek bumbu
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-4 text-accent" /> Kemasan vacuum higienis
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-4 text-accent" /> 100% Rempah alami
-              </span>
-            </div>
-
-            {/* Call to Actions */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Button asChild size="lg" className="rounded-full shadow-soft hover:shadow-card-hover px-7 text-sm font-semibold gap-2">
-                <Link href="/products">
-                  Lihat Menu Hari Ini <ArrowRight className="size-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full border-border/80 px-6 text-sm font-semibold">
-                <Link href="#how-it-works">Pelajari Cara Masak</Link>
-              </Button>
-            </div>
-
-            {/* Foodie Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-6 border-t border-border/60 max-w-lg">
-              <div>
-                <p className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
-                  15 <span className="text-sm font-sans font-medium text-muted-foreground">Menit</span>
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">Rata-rata waktu masak</p>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
+            {/* Left Column: Editorial Headline & Actions */}
+            <div className="space-y-6 lg:col-span-7">
+              {/* Artisanal badge with fade-in */}
+              <div className="animate-fade-in-up inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold text-primary backdrop-blur-sm shadow-sm transition-transform hover:scale-105">
+                <span className="flex h-2 w-2 rounded-full bg-primary animate-ping" />
+                <span>Dapur Segar Siap Masak · P-IRT & 100% Halal</span>
               </div>
-              <div>
-                <p className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
-                  4.9 <span className="text-sm font-sans font-medium text-gold">★</span>
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">Kepuasan pelanggan</p>
-              </div>
-              <div>
-                <p className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
-                  100%
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">Bahan segar & alami</p>
-              </div>
-            </div>
-          </div>
 
-          {/* Right Column: Visual Culinary Showcase */}
-          <div className="relative lg:col-span-5">
-            {/* Main dish card */}
-            <div className="relative mx-auto max-w-md overflow-hidden rounded-3xl border border-border/80 bg-card p-3 shadow-soft sm:p-4 transition-transform duration-500 hover:shadow-card-hover">
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
-                <Image
-                  src="https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=900&q=80"
-                  alt="Paket Ayam Pop O'K Kitchen"
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                
-                <div className="absolute top-3 left-3 flex gap-2">
-                  <span className="rounded-full bg-primary px-3 py-1 text-xs font-bold text-white shadow-sm">
-                    🔥 Menu Terlaris
-                  </span>
+              {/* Editorial Heading with staggered animation */}
+              <h1 className="animate-fade-in-up delay-100 text-balance text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-foreground leading-[1.12]">
+                Masak Enak Tanpa Ribet,{" "}
+                <span className="font-serif italic font-normal text-primary">
+                  Rasa Restoran
+                </span>{" "}
+                di Dapur Rumah.
+              </h1>
+
+              <p className="animate-fade-in-up delay-200 max-w-xl text-balance text-base text-muted-foreground sm:text-lg leading-relaxed">
+                Bahan segar pilihan yang sudah dibersihkan, dipotong rapi, dan dimarinasi
+                bumbu rempah Nusantara asli. Buka vacuum pack, cemplung ke wajan,
+                dan hidangkan masakan hangat dalam 15 menit.
+              </p>
+
+              {/* Reassurance Micro-Pills */}
+              <div className="animate-fade-in-up delay-300 flex flex-wrap gap-y-2 gap-x-4 pt-1 text-xs font-medium text-foreground/80">
+                <span className="flex items-center gap-1.5 transition-transform hover:translate-x-1 duration-200">
+                  <CheckCircle2 className="size-4 text-accent" /> Tanpa repot ulek bumbu
+                </span>
+                <span className="flex items-center gap-1.5 transition-transform hover:translate-x-1 duration-200">
+                  <CheckCircle2 className="size-4 text-accent" /> Kemasan vacuum higienis
+                </span>
+                <span className="flex items-center gap-1.5 transition-transform hover:translate-x-1 duration-200">
+                  <CheckCircle2 className="size-4 text-accent" /> 100% Rempah alami
+                </span>
+              </div>
+
+              {/* Call to Actions */}
+              <div className="animate-fade-in-up delay-400 flex flex-wrap items-center gap-3 pt-2">
+                <Button asChild size="lg" className="rounded-full shadow-soft hover:shadow-card-hover px-7 text-sm font-semibold gap-2 transition-all hover:scale-105 active:scale-95">
+                  <Link href="/products">
+                    Lihat Menu Hari Ini <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="rounded-full border-border/80 px-6 text-sm font-semibold transition-all hover:bg-secondary active:scale-95">
+                  <Link href="#how-it-works">Pelajari Cara Masak</Link>
+                </Button>
+              </div>
+
+              {/* Foodie Stats */}
+              <div className="animate-fade-in-up delay-500 grid grid-cols-3 gap-6 pt-6 border-t border-border/60 max-w-lg">
+                <div className="group transition-transform hover:-translate-y-1 duration-300">
+                  <p className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
+                    15 <span className="text-sm font-sans font-medium text-muted-foreground">Menit</span>
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Rata-rata waktu masak</p>
                 </div>
-
-                <div className="absolute bottom-3 left-3 right-3 text-white">
-                  <p className="text-lg font-bold">Paket Masak Ayam Pop Padang</p>
-                  <p className="text-xs text-white/80">Lengkap dengan sambal khas & daun singkong rebus</p>
+                <div className="group transition-transform hover:-translate-y-1 duration-300">
+                  <p className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
+                    4.9 <span className="text-sm font-sans font-medium text-gold animate-bounce inline-block">★</span>
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Kepuasan pelanggan</p>
                 </div>
-              </div>
-
-              {/* What's inside the meal kit preview */}
-              <div className="mt-4 rounded-2xl bg-secondary/60 p-3.5 text-xs">
-                <div className="flex items-center justify-between font-semibold text-foreground mb-2">
-                  <span className="flex items-center gap-1.5">
-                    <Package className="size-3.5 text-primary" /> Isi Dalam 1 Kemasan:
-                  </span>
-                  <span className="text-[11px] font-normal text-muted-foreground">Porsi 2-3 orang</span>
-                </div>
-                <div className="grid grid-cols-2 gap-1.5 text-muted-foreground text-[11px]">
-                  <span className="flex items-center gap-1">✓ Ayam Segar Ungkep</span>
-                  <span className="flex items-center gap-1">✓ Bumbu Rempah Lengkuas</span>
-                  <span className="flex items-center gap-1">✓ Sambal Merah Padang</span>
-                  <span className="flex items-center gap-1">✓ Daun Singkong Olahan</span>
+                <div className="group transition-transform hover:-translate-y-1 duration-300">
+                  <p className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
+                    100%
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Bahan segar & alami</p>
                 </div>
               </div>
             </div>
 
-            {/* Floating culinary badge */}
-            <div className="absolute -bottom-6 -left-4 hidden sm:flex items-center gap-3 rounded-2xl border border-border/80 bg-card p-3.5 shadow-soft backdrop-blur-md">
-              <div className="grid h-11 w-11 place-items-center rounded-xl bg-accent/10 text-accent font-bold text-xl">
-                ❄️
-              </div>
-              <div>
-                <p className="text-xs font-bold text-foreground">Pengiriman Dingin Terjaga</p>
-                <p className="text-[11px] text-muted-foreground">Ice gel pack menjaga kesegaran sampai rumah</p>
-              </div>
-            </div>
+            {/* Right Column: Visual Culinary Showcase with smooth floating animation */}
+            <div className="relative lg:col-span-5">
+              {/* Main dish card with gentle float */}
+              <div className="animate-float-slow relative mx-auto max-w-md overflow-hidden rounded-3xl border border-border/80 bg-card p-3 shadow-soft sm:p-4 transition-all duration-500 hover:shadow-card-hover hover:scale-[1.02]">
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
+                  <Image
+                    src="https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=900&q=80"
+                    alt="Paket Ayam Pop O'K Kitchen"
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 40vw"
+                    className="object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  
+                  <div className="absolute top-3 left-3 flex gap-2">
+                    <span className="rounded-full bg-primary px-3 py-1 text-xs font-bold text-white shadow-sm flex items-center gap-1">
+                      <Flame className="size-3.5 fill-white animate-pulse" /> Menu Terlaris
+                    </span>
+                  </div>
 
-            {/* Quick prep badge top right */}
-            <div className="absolute -top-4 -right-2 hidden sm:flex items-center gap-2 rounded-full border border-border/80 bg-card px-3.5 py-1.5 shadow-soft">
-              <Timer className="size-4 text-primary" />
-              <span className="text-xs font-semibold text-foreground">Siap Santap &lt; 20 Mnt</span>
+                  <div className="absolute bottom-3 left-3 right-3 text-white">
+                    <p className="text-lg font-bold">Paket Masak Ayam Pop Padang</p>
+                    <p className="text-xs text-white/80">Lengkap dengan sambal khas & daun singkong rebus</p>
+                  </div>
+                </div>
+
+                {/* What's inside the meal kit preview */}
+                <div className="mt-4 rounded-2xl bg-secondary/60 p-3.5 text-xs">
+                  <div className="flex items-center justify-between font-semibold text-foreground mb-2">
+                    <span className="flex items-center gap-1.5">
+                      <Package className="size-3.5 text-primary" /> Isi Dalam 1 Kemasan:
+                    </span>
+                    <span className="text-[11px] font-normal text-muted-foreground">Porsi 2-3 orang</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-1.5 text-muted-foreground text-[11px]">
+                    <span className="flex items-center gap-1">✓ Ayam Segar Ungkep</span>
+                    <span className="flex items-center gap-1">✓ Bumbu Rempah Lengkuas</span>
+                    <span className="flex items-center gap-1">✓ Sambal Merah Padang</span>
+                    <span className="flex items-center gap-1">✓ Daun Singkong Olahan</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating culinary badge with float animation */}
+              <div className="animate-float delay-200 absolute -bottom-6 -left-4 hidden sm:flex items-center gap-3 rounded-2xl border border-border/80 bg-card p-3.5 shadow-soft backdrop-blur-md transition-transform hover:scale-105">
+                <div className="grid h-11 w-11 place-items-center rounded-xl bg-accent/10 text-accent font-bold text-xl">
+                  ❄️
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-foreground">Pengiriman Dingin Terjaga</p>
+                  <p className="text-[11px] text-muted-foreground">Ice gel pack menjaga kesegaran sampai rumah</p>
+                </div>
+              </div>
+
+              {/* Quick prep badge top right with float animation */}
+              <div className="animate-float delay-400 absolute -top-4 -right-2 hidden sm:flex items-center gap-2 rounded-full border border-border/80 bg-card px-3.5 py-1.5 shadow-soft transition-transform hover:scale-105">
+                <Timer className="size-4 text-primary animate-spin-slow" />
+                <span className="text-xs font-semibold text-foreground">Siap Santap &lt; 20 Mnt</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Modern infinite animated marquee ticker */}
+      <MarqueeTicker />
+    </>
   );
 }
 
@@ -191,13 +197,13 @@ export function Features() {
       {/* Bento Grid */}
       <div className="grid gap-6 md:grid-cols-3">
         {/* Bento 1: Wide Card */}
-        <div className="group relative overflow-hidden rounded-3xl border border-border/80 bg-card p-7 shadow-soft transition-all duration-300 hover:border-primary/40 hover:shadow-card-hover md:col-span-2">
+        <div className="group relative overflow-hidden rounded-3xl border border-border/80 bg-card p-7 shadow-soft transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 hover:shadow-card-hover md:col-span-2">
           <div className="flex flex-col justify-between h-full space-y-6">
             <div className="space-y-3">
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                 <ChefHat className="size-6" />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground transition-colors group-hover:text-primary">
                 0 Menit Waktu Kupas & Ulek Bumbu
               </h3>
               <p className="max-w-md text-sm text-muted-foreground leading-relaxed">
@@ -207,7 +213,7 @@ export function Features() {
             </div>
 
             {/* Visual Time Comparison */}
-            <div className="rounded-2xl border border-border/60 bg-secondary/50 p-4">
+            <div className="rounded-2xl border border-border/60 bg-secondary/50 p-4 transition-all duration-300 group-hover:bg-secondary/70">
               <div className="grid gap-3 sm:grid-cols-2 text-xs">
                 <div className="space-y-1 border-b sm:border-b-0 sm:border-r border-border/60 pb-2 sm:pb-0 sm:pr-4">
                   <span className="font-semibold text-muted-foreground">Masak Tradisional (± 60 Menit)</span>
@@ -215,7 +221,7 @@ export function Features() {
                 </div>
                 <div className="space-y-1 sm:pl-2">
                   <span className="font-bold text-primary flex items-center gap-1">
-                    <Sparkles className="size-3.5" /> Bersama O&apos;K Kitchen (± 15 Menit)
+                    <Sparkles className="size-3.5 animate-pulse" /> Bersama O&apos;K Kitchen (± 15 Menit)
                   </span>
                   <p className="text-[11px] text-foreground font-medium">Buka kemasan vacuum → Cemplung ke wajan → Matang & sajikan hangat!</p>
                 </div>
@@ -225,12 +231,12 @@ export function Features() {
         </div>
 
         {/* Bento 2 */}
-        <div className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border/80 bg-card p-7 shadow-soft transition-all duration-300 hover:border-primary/40 hover:shadow-card-hover">
+        <div className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border/80 bg-card p-7 shadow-soft transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 hover:shadow-card-hover">
           <div className="space-y-3">
-            <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/10 text-accent">
+            <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/10 text-accent transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
               <Leaf className="size-6" />
             </div>
-            <h3 className="text-xl font-bold tracking-tight text-foreground">
+            <h3 className="text-xl font-bold tracking-tight text-foreground transition-colors group-hover:text-primary">
               100% Rempah Nusantara
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -243,12 +249,12 @@ export function Features() {
         </div>
 
         {/* Bento 3 */}
-        <div className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border/80 bg-card p-7 shadow-soft transition-all duration-300 hover:border-primary/40 hover:shadow-card-hover">
+        <div className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border/80 bg-card p-7 shadow-soft transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 hover:shadow-card-hover">
           <div className="space-y-3">
-            <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gold/15 text-gold">
+            <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gold/15 text-gold transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
               <Package className="size-6" />
             </div>
-            <h3 className="text-xl font-bold tracking-tight text-foreground">
+            <h3 className="text-xl font-bold tracking-tight text-foreground transition-colors group-hover:text-primary">
               Food-Grade Vacuum Pack
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -261,13 +267,13 @@ export function Features() {
         </div>
 
         {/* Bento 4: Wide Card */}
-        <div className="group relative overflow-hidden rounded-3xl border border-border/80 bg-card p-7 shadow-soft transition-all duration-300 hover:border-primary/40 hover:shadow-card-hover md:col-span-2">
+        <div className="group relative overflow-hidden rounded-3xl border border-border/80 bg-card p-7 shadow-soft transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 hover:shadow-card-hover md:col-span-2">
           <div className="flex flex-col justify-between h-full space-y-4">
             <div className="space-y-3">
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                 <Truck className="size-6" />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground transition-colors group-hover:text-primary">
                 Pengiriman Dingin Terjamin Sampai Depan Pintu
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -309,9 +315,9 @@ export async function BestSellers() {
               Resep paling laris yang paling sering dipesan ulang oleh pelanggan O&apos;K Kitchen.
             </p>
           </div>
-          <Button asChild variant="outline" className="rounded-full border-border/80 self-start sm:self-auto">
+          <Button asChild variant="outline" className="rounded-full border-border/80 self-start sm:self-auto transition-all hover:scale-105 active:scale-95">
             <Link href="/products" className="gap-2">
-              Semua Menu <ArrowRight className="size-4" />
+              Semua Menu <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
         </div>
@@ -373,13 +379,13 @@ export function HowItWorks() {
         {STEPS.map((s) => (
           <div
             key={s.step}
-            className="group relative flex flex-col justify-between rounded-3xl border border-border/80 bg-card p-6 shadow-soft transition-all duration-300 hover:border-primary/40 hover:shadow-card-hover"
+            className="group relative flex flex-col justify-between rounded-3xl border border-border/80 bg-card p-6 shadow-soft transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 hover:shadow-card-hover"
           >
             <div>
-              <span className="font-serif text-3xl font-black text-primary/30 transition-colors group-hover:text-primary">
+              <span className="font-serif text-3xl font-black text-primary/30 transition-all duration-300 group-hover:text-primary group-hover:scale-110 inline-block">
                 {s.step}
               </span>
-              <h3 className="mt-4 text-lg font-bold text-foreground">{s.title}</h3>
+              <h3 className="mt-4 text-lg font-bold text-foreground transition-colors group-hover:text-primary">{s.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
             </div>
             <p className="mt-4 pt-3 border-t border-border/50 text-[11px] text-muted-foreground font-medium">
@@ -396,16 +402,16 @@ export function HowItWorks() {
 export function CtaSection() {
   return (
     <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8 sm:pb-24">
-      <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-stone-900 via-stone-900 to-amber-950 px-6 py-14 text-white shadow-soft sm:px-12 sm:py-16">
-        {/* Decorative subtle ambient lights */}
+      <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-stone-900 via-stone-900 to-amber-950 px-6 py-14 text-white shadow-soft sm:px-12 sm:py-16 transition-all duration-500 hover:shadow-card-hover">
+        {/* Decorative subtle ambient lights with pulsing animation */}
         <div className="pointer-events-none absolute inset-0 opacity-20">
-          <div className="absolute -left-10 -top-10 h-64 w-64 rounded-full bg-primary blur-3xl" />
-          <div className="absolute right-0 bottom-0 h-64 w-64 rounded-full bg-gold blur-3xl" />
+          <div className="absolute -left-10 -top-10 h-64 w-64 rounded-full bg-primary blur-3xl animate-pulse" />
+          <div className="absolute right-0 bottom-0 h-64 w-64 rounded-full bg-gold blur-3xl animate-pulse duration-1000" />
         </div>
 
         <div className="relative z-10 mx-auto max-w-3xl text-center space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur-sm">
-            <Sparkles className="size-3.5 text-gold" /> Promo Pengguna Baru
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur-sm transition-transform hover:scale-105">
+            <Sparkles className="size-3.5 text-gold animate-spin-slow" /> Promo Pengguna Baru
           </div>
 
           <h2 className="text-balance text-3xl font-extrabold sm:text-4xl lg:text-5xl font-serif tracking-tight leading-tight">
@@ -415,7 +421,7 @@ export function CtaSection() {
 
           <p className="mx-auto max-w-lg text-sm sm:text-base text-stone-300 leading-relaxed">
             Dapatkan pengalaman memasak praktis tanpa stres. Gunakan kode voucher{" "}
-            <code className="rounded bg-white/20 px-2 py-0.5 font-mono text-xs font-bold text-white">
+            <code className="rounded bg-white/20 px-2 py-0.5 font-mono text-xs font-bold text-white transition-colors hover:bg-white/30 cursor-pointer">
               MASAKHEMAT
             </code>{" "}
             untuk potongan diskon 15% pada pesanan pertamamu.
@@ -425,17 +431,17 @@ export function CtaSection() {
             <Button
               asChild
               size="lg"
-              className="rounded-full bg-primary hover:bg-primary/90 text-white shadow-glow px-8 font-semibold text-sm h-12"
+              className="rounded-full bg-primary hover:bg-primary/90 text-white shadow-glow px-8 font-semibold text-sm h-12 transition-all hover:scale-105 active:scale-95"
             >
               <Link href="/products">
-                Mulai Belanja Menu <ArrowRight className="size-4" />
+                Mulai Belanja Menu <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
             <Button
               asChild
               size="lg"
               variant="outline"
-              className="rounded-full border-white/30 bg-white/5 text-white hover:bg-white/10 hover:text-white px-6 font-semibold text-sm h-12"
+              className="rounded-full border-white/30 bg-white/5 text-white hover:bg-white/10 hover:text-white px-6 font-semibold text-sm h-12 transition-all hover:scale-105 active:scale-95"
             >
               <Link href="/products?category=ayam">Lihat Menu Ayam</Link>
             </Button>
